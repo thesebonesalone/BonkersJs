@@ -53,15 +53,15 @@ document.addEventListener("DOMContentLoaded", function(){
     })
     // Visual representation of the key presses
     document.addEventListener("clockTick", function(e){
-        start.childNodes[1].innerText = `Up is ${up}`
-        start.childNodes[3].innerText = `Down is ${down}`
-        start.childNodes[5].innerText = `Left is ${left}`
-        start.childNodes[7].innerText = `Right is ${right}`
+        // start.childNodes[1].innerText = `Up is ${up}`
+        // start.childNodes[3].innerText = `Down is ${down}`
+        // start.childNodes[5].innerText = `Left is ${left}`
+        // start.childNodes[7].innerText = `Right is ${right}`
       
     })
+
+    //Collider function. Takes two hitboxes and sees if they are NOT touching. If they are it returns true.
     function collider(hitbox1,hitbox2){
-        console.log(hitbox1)
-        console.log(hitbox2)
         let minAx = hitbox1[0]
         let minAy = hitbox1[1]
         let maxAx = hitbox1[2]
@@ -74,18 +74,33 @@ document.addEventListener("DOMContentLoaded", function(){
         let aRightOfB = minAx > maxBx
         let aAboveB = minAy > maxBy
         let aBelowB = maxAy < minBy
-        console.log([ aLeftOfB, aRightOfB, aAboveB, aBelowB])
         return !( aLeftOfB || aRightOfB || aAboveB || aBelowB)
     }
-    // create Enemy class
-    class Enemy {
+    //Initial Entity
+    class Entity {
         constructor(x,y) {
             this.x = x
             this.y = y
             this.hb = [this.x,this.y,this.x + 16, this.y + 16]
-            this.name = "Enemy"
+            this.name = "Entity"
             this.fIndex = functionLoop.length
             functionLoop.push(this)
+        }
+        loop(){
+
+        }
+        hitbox(){
+
+        }
+        destroy() {
+            functionLoop[this.fIndex] = false
+        }
+    }
+    // create Enemy class
+    class Enemy extends Entity{
+        constructor(x,y) {
+            super(x,y)
+            this.name = "Enemy"
         }
         loop(){
             this.hitbox()
@@ -96,9 +111,9 @@ document.addEventListener("DOMContentLoaded", function(){
                 let object = functionLoop[entity]
                     if (object){
                         if (object.name === "Player Missle") {
-                            if (collider(this.hb, object.hb))
-                            {
-                                 console.log("A hit!")
+                            if (collider(this.hb, object.hb)){
+                                this.destroy()
+                                object.destroy()
                             }
                         }
                     }
@@ -113,13 +128,10 @@ document.addEventListener("DOMContentLoaded", function(){
 
     }
     // create player class
-    class Player {
+    class Player extends Entity{
         constructor(x,y) {
-            this.x = x
-            this.y = y
-            this.hb = [this.x,this.y,this.x + 16, this.y + 16]
+            super(x,y)
             this.name = "Player"
-            functionLoop.push(this)
         }
         loop() {
             this.hitbox()
@@ -143,17 +155,18 @@ document.addEventListener("DOMContentLoaded", function(){
         }
         
     }
+   
+
+
+
+
     //create Star class
-    class Star {
+    class Star extends Entity{
         constructor(x,y) {
-            this.x = x
-            this.y = y
-            this.hb = [this.x,this.y,this.x + 16, this.y + 16]
+            super(x,y)
             this.name = "Star"
             this.speed = Math.random() * 2 + 1
-            this.fIndex = functionLoop.length
             this.color = ["#ffffff","#a4f5f3","#fff454","#ff0000"][Math.floor(Math.random()* 4)]
-            functionLoop.push(this)
         }
         loop(){
             this.hitbox()
@@ -161,7 +174,7 @@ document.addEventListener("DOMContentLoaded", function(){
             ctx.fillStyle = this.color
             ctx.fillRect(this.x,this.y,1,1)
             if (this.y > 288) {
-                functionLoop[this.fIndex] = false
+                this.destroy()
             }
         
         }
@@ -170,20 +183,11 @@ document.addEventListener("DOMContentLoaded", function(){
         }
 
     }
-
-
-
-
     // create player missle class
-    class Missle {
+    class Missle extends Entity{
         constructor(x,y) {
-            this.x = x
-            this.y = y
+            super(x,y)
             this.name = "Player Missle"
-            this.hb = [this.x,this.y,this.x + 16, this.y + 16]
-            this.fIndex = functionLoop.length
-            functionLoop.push(this)
-
         }
         loop() {
             this.hitbox()
@@ -191,7 +195,6 @@ document.addEventListener("DOMContentLoaded", function(){
             ctx.drawImage(img, this.x, this.y)
             this.y -= 4
             if (this.y < -16) {
-                console.log("This should stop working")
                 functionLoop[this.fIndex] = false
             }
         }
@@ -201,7 +204,11 @@ document.addEventListener("DOMContentLoaded", function(){
     }
     // initiates player object
     player1 = new Player(112,240)
-    new Enemy(112,24)
+    for (let i = 0; i < 224; i += 16) {
+        new Enemy(i,24)
+        new Enemy(i,48)
+        new Enemy(i,72)
+    }
 
     // defines the logic that fires every time 16.66 milliseconds passes which updates internal logic at 60 ticks per second, smooth framerate says what?
     function fireClock(){
