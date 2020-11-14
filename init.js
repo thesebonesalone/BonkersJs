@@ -2,9 +2,14 @@
 const head = document.getElementsByTagName('head')[0]
 let source = document.createElement('script')
 //append Entities to source
+
+
+//scene variables
+let sceneHeight = 0
+let sceneWidth = 0
+
+
 //since we are not using node.js we're gonna have to do this manually. Bummer. But here's a thing to make it slightly easier.
-
-
 let files = [
     'Entities/entity.js',
     'Entities/player.js',
@@ -36,8 +41,6 @@ canvas.setAttribute("width",`${canvasWidth}`)
 canvas.setAttribute('height',`${canvasHeight}`)
 canvas.setAttribute('style',"border:1px solid #000000;")
 screenHolder.append(canvas)
-
-//define useful functions
 
 function appendSprite(sprite){
     let holder = document.getElementById("sprite-holder")
