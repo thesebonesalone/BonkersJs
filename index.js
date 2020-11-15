@@ -1,4 +1,8 @@
-const ctx = canvas.getContext("2d");
+const bufferCanvas = document.createElement("canvas")
+bufferCanvas.width = sceneWidth
+bufferCanvas.height = sceneHeight
+const ctx = bufferCanvas.getContext("2d")
+const mainCtx = mainCanvas.getContext("2d")
 const clockTick = new Event('clockTick')
 const start = document.getElementById("starter")
 let entityCount = 0
@@ -63,15 +67,16 @@ for (let i = 0; i < 224; i += 16) {
 function fireClock(){
     document.dispatchEvent(clockTick)
     count += 1
-    if (count % 3 === 0){
-        new Star(Math.floor(Math.random() * 224),-20)
-    }
-    if (fire === true){
-        score += 10
-    }
     //clear screen
+    mainCtx.fillStyle = "#000000";
+    mainCtx.fillRect(0, 0, displayWidth, displayHeight);
+    //clear Buffer
     ctx.fillStyle = "#000000";
-    ctx.fillRect(0, 0, 224, 288);
+    mainCtx.fillRect(0, 0, sceneWidth, sceneHeight);
+
+    //draw background
+    ctx.drawImage(backGround,0,0)
+
     //logic loop
     for (const object in functionLoop){
         functionLoop[object].loop()
@@ -83,6 +88,10 @@ function fireClock(){
     if (fire === true){
         fireCount += 1
     }
+
+    //draw buffer to main canvas
+    mainCtx.drawImage(bufferCanvas, cameraX, cameraY, cameraWidth, cameraHeight, 0, 0, displayWidth, displayHeight)
+
 }
 setInterval(fireClock, 16.66)
 

@@ -5,8 +5,17 @@ let source = document.createElement('script')
 
 
 //scene variables
-let sceneHeight = 0
-let sceneWidth = 0
+let sceneWidth = 2592
+let sceneHeight = 2096
+
+let cameraWidth = 160
+let cameraHeight = 144
+let cameraX = 0
+let cameraY = 0
+
+let displayWidth = 1280
+let displayHeight = 1152
+
 
 
 //since we are not using node.js we're gonna have to do this manually. Bummer. But here's a thing to make it slightly easier.
@@ -30,20 +39,19 @@ files.forEach(function(file){
 source.setAttribute('src','index.js')
 head.append(source)
 
-//define Canvas size
-const canvasWidth = 224
-const canvasHeight = 288
-
+// build canvas
 const screenHolder = document.getElementsByClassName('full-screen')[0]
-const canvas = document.createElement("canvas")
-canvas.setAttribute("id","Main-Screen")
-canvas.setAttribute("width",`${canvasWidth}`)
-canvas.setAttribute('height',`${canvasHeight}`)
-canvas.setAttribute('style',"border:1px solid #000000;")
-screenHolder.append(canvas)
+const mainCanvas = document.createElement("canvas")
 
+mainCanvas.setAttribute("id","Main-Screen")
+mainCanvas.setAttribute("width",`${displayWidth}`)
+mainCanvas.setAttribute('height',`${displayHeight}`)
+mainCanvas.setAttribute('style',"border:1px solid #000000;")
+screenHolder.append(mainCanvas)
+
+const holder = document.getElementById("sprite-holder")
 function appendSprite(sprite){
-    let holder = document.getElementById("sprite-holder")
+    
     let img = document.createElement('img')
     img.setAttribute('hidden','true')
     img.setAttribute('id',sprite[0])
@@ -51,6 +59,10 @@ function appendSprite(sprite){
     holder.append(img)
 }
 let sprites = []
+let backGround = document.createElement('img')
+backGround.setAttribute('src','Assets/Backgrounds/testBackground.png')
+backGround.setAttribute('hidden','true')
+holder.append(backGround)
 
 //Collider Function
 function collider(hitbox1,hitbox2){
@@ -68,3 +80,4 @@ function collider(hitbox1,hitbox2){
     let aBelowB = maxAy < minBy
     return !( aLeftOfB || aRightOfB || aAboveB || aBelowB)
 }
+
