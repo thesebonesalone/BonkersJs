@@ -1,4 +1,8 @@
 const bufferCanvas = document.createElement("canvas")
+const tileCanvas = document.createElement("canvas")
+tileCanvas.width = sceneWidth
+tileCanvas.height = sceneHeight
+const tileCtx = tileCanvas.getContext("2d")
 bufferCanvas.width = sceneWidth
 bufferCanvas.height = sceneHeight
 const ctx = bufferCanvas.getContext("2d")
@@ -17,6 +21,26 @@ let left = false
 let right = false
 let fire = false
 let fireCount = 0
+
+//Build Tile Background
+
+mapArray.forEach(function(row,index){
+    row.forEach(function(tile,tileIndex){
+        tileCtx.drawImage(tileImage,
+            (tile * 16) % tileMapWidth, //source X
+            Math.floor((tile * 16) / 128) * 16, //source Y
+            tileSize, //source width
+            tileSize, //source Height
+            tileIndex * 16, //destination X
+            index * 16, // destination Y
+            tileSize, // destination width
+            tileSize) // destination height
+    })
+})
+
+
+
+
 // creates listeners for arrow keys and determines if they are or are not pressed
 document.addEventListener("keydown", function(e){
     if (e.key === "ArrowUp"){
@@ -56,12 +80,7 @@ document.addEventListener("keyup", function(e){
 })
 
 // initiates player object
-player1 = new Player(112,240)
-for (let i = 0; i < 224; i += 16) {
-    new Enemy(i,24)
-    new Enemy(i,48)
-    new Enemy(i,72)
-}
+player1 = new Player(16,16)
 
 // defines the logic that fires every time 16.66 milliseconds passes which updates internal logic at 60 ticks per second, smooth framerate says what?
 function fireClock(){
@@ -75,7 +94,7 @@ function fireClock(){
     mainCtx.fillRect(0, 0, sceneWidth, sceneHeight);
 
     //draw background
-    ctx.drawImage(backGround,0,0)
+    ctx.drawImage(tileCanvas,0,0)
 
     //logic loop
     for (const object in functionLoop){

@@ -16,8 +16,8 @@ class Player extends Entity{
 
 
 
-        this.hsp = ((right) - (left)) * 2
-        this.vsp = ((down) - (up)) * 2
+        this.hsp = ((right) - (left)) * 3
+        this.vsp = ((down) - (up)) * 3
         if (right || left ){
             if (this.hsp > 0){
                 this.sprite = "LinkRight"
@@ -36,14 +36,21 @@ class Player extends Entity{
         this.y += this.vsp
 
         if (this.x < 0){this.x = 0}
-        if (this.x > sceneWidth){this.x = sceneWidth}
-        if (this.y > sceneHeight){this.y = sceneHeight}
+        if (this.x > sceneWidth - 16){this.x = sceneWidth - 16}
+        if (this.y > sceneHeight - 16){this.y = sceneHeight - 16}
         if (this.y < 0){this.y = 0}
         if (fire === true && fireCount < 1) {
             new Missle(this.x,this.y)
         }
         cameraX = this.x - (cameraWidth/2)
         cameraY = this.y - (cameraHeight/2)
+
+        cameraX < 0 ? cameraX = 0 : null;
+        cameraX > sceneWidth - cameraWidth ? cameraX = sceneWidth - cameraWidth : null;
+
+        cameraY < 0 ? cameraY = 0 : null;
+        cameraY > sceneHeight - cameraHeight ? cameraY = sceneHeight - cameraHeight : null;
+
 
     }
     hitbox(){
