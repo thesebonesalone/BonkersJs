@@ -16,6 +16,10 @@ let cameraY = 0
 let displayWidth = 1280
 let displayHeight = 1152
 
+//This is where I will eventually initiate the loading of the initial scene. The scene will contain the information regarding the
+//tileset, the scene size and the assets needed to be loaded in
+
+
 //Tileset Variables
 let tileSize = 16
 let tileMapWidth = 128
@@ -112,4 +116,4 @@ function collider(hitbox1,hitbox2){
     return !( aLeftOfB || aRightOfB || aAboveB || aBelowB)
 }
 
-scene = new Scene(384,384,'Assests/Tilesets/OverWorld0.png', 'Assets/Backgrounds/testBackground.png',function(){})
+//scene = new Scene(384,384,'Assests/Tilesets/OverWorld0.png', 'Assets/Backgrounds/testBackground.png',function(){})

@@ -16,8 +16,8 @@ class Player extends Entity{
 
 
 
-        this.hsp = ((right) - (left)) * 3
-        this.vsp = ((down) - (up)) * 3
+        this.hsp = ((right) - (left))
+        this.vsp = ((down) - (up))
         if (right || left ){
             if (this.hsp > 0){
                 this.sprite = "LinkRight"
