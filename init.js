@@ -70,7 +70,6 @@ files.forEach(function(file){
     head.append(fileSource)
 })
 
-
 source.setAttribute('src','index.js')
 head.append(source)
 
@@ -93,6 +92,7 @@ function appendSprite(sprite){
     img.setAttribute('src',sprite[1])
     holder.append(img)
 }
+
 let sprites = []
 let backGround = document.createElement('img')
 backGround.setAttribute('src','Assets/Backgrounds/testBackground.png')
