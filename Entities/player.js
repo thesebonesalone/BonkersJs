@@ -10,11 +10,8 @@ class Player extends Entity{
     loop() {
         this.hitbox()
         // player movement
-        
 
-
-
-
+// movement with sprite assignment 
 
         this.hsp = ((right) - (left))
         this.vsp = ((down) - (up))
@@ -32,8 +29,37 @@ class Player extends Entity{
                 this.sprite = "LinkUp"
             }
         }
-        this.x += this.hsp
+        // if going to move into wall reduce speed to 0.(Might only work if speed is non-decimal) check if speed will move into wal if yes reduce speed by 1  
+
+        // area of player contact .x= left .y=top .x+16=right .y+16=bottom 
+       let edges = [21,13,29,4,2,18,10,7,54]
+        // this.hb = [(0)this.x,(1)this.y,(2)this.x+16,(3)this.y+16]
+       let side_to_check;
+        if (this.hsp > 0){                // is player moving right?
+            side_to_check = this.hb[2]  // side_to_check = right_side
+        }else{
+            side_to_check = this.hb[0]  // else side_to_check = left_side
+        } 
+        // while (side_to_check, top_side) or (side_to_check, bottom_side) { checks (x,y) 
+        while(mapArray[Math.floor(this.hb[1]/16)][Math.floor((side_to_check + this.hsp)/16)] === 21 || mapArray[Math.floor(this.hb[3]/16)][Math.floor((side_to_check + this.hsp)/16)] === 21){    
+            this.hsp = 0 
+        }                                                                   // }
+        this.x += this.hsp                                                  // this.x += this.hsp
+
+// is player moving down? side_to_check = bottom_side else side_to_check = top_side
+        if(this.vsp > 0){
+            side_to_check = this.hb[3] 
+        }else{
+            side_to_check = this.hb[1]  
+        }                   //check (y,x) because of map array set up first idx is y value and x is how deep on y array
+        while(mapArray[Math.floor((side_to_check + this.vsp)/16)][Math.floor(this.hb[0]/16)] === 21 || mapArray[Math.floor((side_to_check + this.vsp)/16)][Math.floor(this.hb[2]/16)] === 21){    
+            this.vsp = 0 
+        }                                                                   // }
         this.y += this.vsp
+       
+// while (left_side, side_to_check) or (right_side, side_to_check) {
+// 	this.vsp -= 1 * (this.vsp > 0) + (this.vsp < 0)
+// }
 
         if (this.x < 0){this.x = 0}
         if (this.x > sceneWidth - 16){this.x = sceneWidth - 16}
@@ -54,9 +80,13 @@ class Player extends Entity{
 
     }
     hitbox(){
+        // where to configure repulsion area 
+        // area of player contact .x= left .y=top .x+16=right .y+16=bottom 
         this.hb = [this.x,this.y,this.x+16,this.y+16]
     }
     
+    // Math.floor(x/16) 
+
 }
 
 sprites = [

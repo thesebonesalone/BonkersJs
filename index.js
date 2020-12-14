@@ -114,15 +114,3 @@ function fireClock(){
 }
 setInterval(fireClock, 16.66)
 
-
-
-
-
-
-
-
-
-
-
-
-
