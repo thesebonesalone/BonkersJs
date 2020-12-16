@@ -32,7 +32,7 @@ class Player extends Entity{
         // if going to move into wall reduce speed to 0.(Might only work if speed is non-decimal) check if speed will move into wal if yes reduce speed by 1  
 
         // area of player contact .x= left .y=top .x+16=right .y+16=bottom 
-       let edges = [21,13,29,4,2,18,10,7,54]
+        // let edges = [5,6,7,8,12,13,14,15,20,21,22,23,24,25,27,28,29]
         // this.hb = [(0)this.x,(1)this.y,(2)this.x+16,(3)this.y+16]
        let side_to_check;
         if (this.hsp > 0){                // is player moving right?
@@ -41,7 +41,7 @@ class Player extends Entity{
             side_to_check = this.hb[0]  // else side_to_check = left_side
         } 
         // while (side_to_check, top_side) or (side_to_check, bottom_side) { checks (x,y) 
-        while(mapArray[Math.floor(this.hb[1]/16)][Math.floor((side_to_check + this.hsp)/16)] === 21 || mapArray[Math.floor(this.hb[3]/16)][Math.floor((side_to_check + this.hsp)/16)] === 21){    
+        while((mapArray[Math.floor(this.hb[1]/16)][Math.floor((side_to_check + this.hsp)/16)]) > 13 || (mapArray[Math.floor(this.hb[3]/16)][Math.floor((side_to_check + this.hsp)/16)]) > 13 ){    
             this.hsp = 0 
         }                                                                   // }
         this.x += this.hsp                                                  // this.x += this.hsp
@@ -52,7 +52,7 @@ class Player extends Entity{
         }else{
             side_to_check = this.hb[1]  
         }                   //check (y,x) because of map array set up first idx is y value and x is how deep on y array
-        while(mapArray[Math.floor((side_to_check + this.vsp)/16)][Math.floor(this.hb[0]/16)] === 21 || mapArray[Math.floor((side_to_check + this.vsp)/16)][Math.floor(this.hb[2]/16)] === 21){    
+        while((mapArray[Math.floor((side_to_check + this.vsp)/16)][Math.floor(this.hb[0]/16)]) > 13 || (mapArray[Math.floor((side_to_check + this.vsp)/16)][Math.floor(this.hb[2]/16)]) > 13){    
             this.vsp = 0 
         }                                                                   // }
         this.y += this.vsp
@@ -82,7 +82,7 @@ class Player extends Entity{
     hitbox(){
         // where to configure repulsion area 
         // area of player contact .x= left .y=top .x+16=right .y+16=bottom 
-        this.hb = [this.x,this.y,this.x+16,this.y+16]
+        this.hb = [this.x+3,this.y+3,this.x+13,this.y+13]
     }
     
     // Math.floor(x/16) 

@@ -25,13 +25,13 @@ let tileSize = 16
 let tileMapWidth = 128
 let tileMapHeigth = 128
 let tileImage = document.createElement('img')
-tileImage.setAttribute('src','Assets/Tilesets/OverWorld0.png')
+tileImage.setAttribute('src','Assets/Tilesets/TileSet.png')
 tileImage.setAttribute('hidden','true')
 head.append(tileImage)
 //set Scene Map
 
 let mapArray = [
-[29,21,20,21,9,10,10,10,10,18,18,18,55,10,10,10,10,10,10,10], // x is how deep of the y cord
+[29,21,20,21,9,10,10,10,10,18,18,18,55,10,10,10,10,10,10,10], // x is 
 [21,4,4,4,17,18,10,10,11,4,4,4,55,10,10,10,10,10,10,10],
 [13,4,35,36,37,4,9,10,11,24,24,24,55,18,18,18,18,18,18,10],
 [21,4,43,44,45,4,9,10,11,32,40,32,55,4,42,4,4,4,4,9],
