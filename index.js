@@ -80,7 +80,7 @@ document.addEventListener("keyup", function(e){
 })
 
 // initiates player object
-player1 = new Player(16,16)
+player1 = new Player(304,48)
 
 // defines the logic that fires every time 16.66 milliseconds passes which updates internal logic at 60 ticks per second, smooth framerate says what?
 function fireClock(){
