@@ -13,8 +13,8 @@ class Player extends Entity{
 
 // movement with sprite assignment 
 
-        this.hsp = ((right) - (left))
-        this.vsp = ((down) - (up))
+        this.hsp = ((right) - (left)) 
+        this.vsp = ((down) - (up)) 
         if (right || left ){
             if (this.hsp > 0){
                 this.sprite = "LinkRight"
